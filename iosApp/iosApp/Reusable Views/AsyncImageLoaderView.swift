@@ -14,6 +14,12 @@ struct AsyncImageLoaderView: View {
     var maxHeight: CGFloat = 50
     
     var body: some View {
+        if imageUrl == "" {
+            Image(.no)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(maxWidth: maxWidth, maxHeight: maxHeight)
+        } else {
             AsyncImage(
                 url: URL(string: imageUrl),
                 content: { image in
@@ -25,6 +31,7 @@ struct AsyncImageLoaderView: View {
                     ProgressView()
                 }
             )
+        }
     }
 }
 

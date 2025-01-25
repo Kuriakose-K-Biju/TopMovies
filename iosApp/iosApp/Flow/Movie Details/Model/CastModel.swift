@@ -15,11 +15,18 @@ struct CastModel: Codable {
 }
 
 struct Cast: Codable, Hashable {
+    let id: Int
     let name: String
     let profilePath: String?
+    var profileUrl: String {
+        if let imageEndPoint = profilePath {
+            return "https://image.tmdb.org/t/p/w500".appending(imageEndPoint)
+        }
+        return ""
+    }
 
     enum CodingKeys: String, CodingKey {
-        case name
+        case id, name
         case profilePath = "profile_path"
     }
 }

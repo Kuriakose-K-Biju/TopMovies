@@ -11,11 +11,11 @@ import Foundation
 // MARK: - Movie Details
 struct MovieModel: Codable {
     let id: Int
-    let overview, posterPath: String
+    let overview, posterPath: String?
     let productionCompanies: [ProductionCompany]
-    let releaseDate: Date
-    let title: String
-    let voteAverage: Double
+    let releaseDate: Date?
+    let title: String?
+    let voteAverage: Double?
 
     enum CodingKeys: String, CodingKey {
         case id, overview
@@ -29,5 +29,5 @@ struct MovieModel: Codable {
 
 // MARK: - ProductionCompany
 struct ProductionCompany: Codable {
-    let name: String
+    let name: String?
 }
