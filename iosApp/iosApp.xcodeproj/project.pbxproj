@@ -38,6 +38,7 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0EA1ABF82D44162D00E64DB2 /* Flow */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Flow; sourceTree = "<group>"; };
 		0EA1ABFD2D44187A00E64DB2 /* Reusable Views */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Reusable Views"; sourceTree = "<group>"; };
+		0EA1AC132D44339E00E64DB2 /* Network Layer */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Network Layer"; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +80,7 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				0EA1AC132D44339E00E64DB2 /* Network Layer */,
 				0EA1ABFD2D44187A00E64DB2 /* Reusable Views */,
 				0EA1ABF82D44162D00E64DB2 /* Flow */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
@@ -117,6 +119,7 @@
 			fileSystemSynchronizedGroups = (
 				0EA1ABF82D44162D00E64DB2 /* Flow */,
 				0EA1ABFD2D44187A00E64DB2 /* Reusable Views */,
+				0EA1AC132D44339E00E64DB2 /* Network Layer */,
 			);
 			name = iosApp;
 			productName = iosApp;
