@@ -27,7 +27,6 @@ struct ContentView: View {
                 ) {
                     EmptyView()
                 }
-                .navigationTitle("Top Movies")
             }
         }
     }

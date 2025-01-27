@@ -65,44 +65,55 @@ fun MovieListScreen(
             .statusBarsPadding(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(vertical = 12.dp)
-                .padding(horizontal = 10.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text("Top Movies")
+                    },
+                    backgroundColor = Color(0xFF9AD9FF)
+                )
+            },
         ) {
-            if(state.isLoading) {
-                CircularProgressIndicator()
-            } else {
-                when {
-                    state.errorMessage != null -> {
-                        Text(
-                            text = state.errorMessage,
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.headlineSmall,
-                            color = MaterialTheme.colorScheme.error
-                        )
-                    }
-                    state.result?.movies?.isEmpty() == true -> {
-                        androidx.compose.material3.Text(
-                            text = "No Data Available",
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.headlineSmall,
-                            color = MaterialTheme.colorScheme.error
-                        )
-                    }
-                    else -> {
-                        state.result?.let { it1 ->
-                            MovieListView(
-                                movies = it1.movies,
-                                onMovieClick = {
-                                    onAction(MovieListAction.OnMovieClick(it))
-                                },
-                                modifier = Modifier.fillMaxSize(),
-                                scrollState = movieResultsListState
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(vertical = 12.dp)
+                    .padding(horizontal = 10.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+
+            ) {
+                if(state.isLoading) {
+                    CircularProgressIndicator()
+                } else {
+                    when {
+                        state.errorMessage != null -> {
+                            Text(
+                                text = state.errorMessage,
+                                textAlign = TextAlign.Center,
+                                style = MaterialTheme.typography.headlineSmall,
+                                color = MaterialTheme.colorScheme.error
                             )
+                        }
+                        state.result?.movies?.isEmpty() == true -> {
+                            androidx.compose.material3.Text(
+                                text = "No Data Available",
+                                textAlign = TextAlign.Center,
+                                style = MaterialTheme.typography.headlineSmall,
+                                color = MaterialTheme.colorScheme.error
+                            )
+                        }
+                        else -> {
+                            state.result?.let { it1 ->
+                                MovieListView(
+                                    movies = it1.movies,
+                                    onMovieClick = {
+                                        onAction(MovieListAction.OnMovieClick(it))
+                                    },
+                                    modifier = Modifier.fillMaxSize(),
+                                    scrollState = movieResultsListState
+                                )
+                            }
                         }
                     }
                 }
