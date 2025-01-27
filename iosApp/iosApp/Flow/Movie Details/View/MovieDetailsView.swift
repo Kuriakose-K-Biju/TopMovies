@@ -10,7 +10,11 @@ import SwiftUI
 
 struct MovieDetailsView: View {
     
-    @StateObject private var viewModel: MovieViewModel = MovieViewModel()
+    @ObservedObject private var viewModel: MovieViewModel
+    
+    init(movieID: String) {
+        self.viewModel = MovieViewModel(movieID: movieID)
+    }
     
     var body: some View {
         NavigationView {
@@ -34,25 +38,33 @@ struct MovieDetailsView: View {
                         AsyncImageLoaderView(imageUrl: viewModel.movieImageURL,
                                              maxWidth: .infinity,
                                              maxHeight: 350)
-                        DetailContentView(title: "Movie Name", value: movieDetails.title ?? "No Data Available")
+                        title
                         DetailContentView(title: "Synopsis", value: movieDetails.overview ?? "No Data Available")
-                        CastView(castContent: viewModel.castDetails)
                         DetailContentView(title: "User Rating", value: viewModel.movieRating)
+                        CastView(castContent: viewModel.castDetails)
                         DetailContentView(title: "Production Company", value: viewModel.productionCompany)
                         DetailContentView(title: "Release Date", value: viewModel.releaseDate)
                     }
                     .padding(EdgeInsets(top: 0.0, leading: 8.0, bottom: 20.0, trailing: 8.0))
                 }
                 .clipped()
-                .navigationTitle("Movie Details")
             }
         }
         .onAppear {
             viewModel.getDetails()
         }
     }
+    
+    var title: some View {
+        return Text(viewModel.movieDetails?.title ?? "No Data Available")
+            .font(.title)
+            .fontWeight(.heavy)
+            .multilineTextAlignment(.center)
+            .frame(maxWidth: .infinity, alignment: .center)
+    }
+    
 }
 
 #Preview {
-    MovieDetailsView()
+    MovieDetailsView(movieID: "273")
 }

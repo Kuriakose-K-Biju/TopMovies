@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 struct MovieDataHandler {
     func create(movieRecord: MovieModel, castRecord: CastModel) {
@@ -57,5 +58,28 @@ struct MovieDataHandler {
         guard result.count != 0 else {return nil}
 
         return result.first
+    }
+    
+    func saveImage(imageUrl: String, image: UIImage) {
+        CoreDataHelper.shared.persistentContainer.performBackgroundTask { context in
+        let imageData = CDImages(context: context)
+        imageData.url = imageUrl
+        imageData.imageData = image.jpegData(compressionQuality: 1.0)
+            try? context.save()
+        }
+    }
+    
+    func getImage(byUrl url: String) -> UIImage? {
+        let managerObjctContect = CoreDataHelper.shared.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<CDImages>(entityName: "CDImages")
+        let fetchByUrl = NSPredicate(format: "url==%@", url)
+        fetchRequest.predicate = fetchByUrl
+
+        let result = try! managerObjctContect.fetch(fetchRequest)
+        guard result.count != 0 else {return nil}
+        
+        let imageData = result.first?.imageData
+        guard let data = imageData, let image = UIImage(data: data) else { return nil }
+        return image
     }
 }

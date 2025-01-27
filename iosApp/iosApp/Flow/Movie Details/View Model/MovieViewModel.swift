@@ -16,10 +16,15 @@ class MovieViewModel: ObservableObject {
     @Published var loaderEnabled: Bool = false
     @Published var networkError: NetworkError? = nil
     var cancelable: Set<AnyCancellable> = []
+    var movieId: String
+    
+    init(movieID: String) {
+        self.movieId = movieID
+    }
     
     func getDetails() {
         self.loaderEnabled = true
-        guard let movieFetched = MovieDataHandler().get(byIdentifier: 273) else {
+        guard let id = Int(movieId), let movieFetched = MovieDataHandler().get(byIdentifier: id) else {
             self.getMovieDetailsFromApi()
             return
         }
@@ -29,8 +34,8 @@ class MovieViewModel: ObservableObject {
     }
     
     func getMovieDetailsFromApi() {
-        let getMovieApiCall = ApiHandler.callApi(GetMovieDetails(movieId: "273"))
-        let getCastApiCall = ApiHandler.callApi(GetCastDetails(movieId: "273", queryParams: ["language": "en-US"]))
+        let getMovieApiCall = ApiHandler.callApi(GetMovieDetails(movieId: movieId))
+        let getCastApiCall = ApiHandler.callApi(GetCastDetails(movieId: movieId, queryParams: ["language": "en-US"]))
         Publishers.Zip(getMovieApiCall, getCastApiCall)
             .sink { [weak self] completion in
                 self?.loaderEnabled = false

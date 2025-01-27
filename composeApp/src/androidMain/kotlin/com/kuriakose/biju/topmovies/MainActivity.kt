@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.remember
+import com.kuriakose.biju.topmovies.movie.presentation.SelectedMovieViewModel
 import io.ktor.client.engine.okhttp.OkHttp
 
 class MainActivity : ComponentActivity() {
@@ -12,7 +13,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             App(
-                engine = remember { OkHttp.create() }
+                engine = remember { OkHttp.create() },
+                selectedMovieViewModel = SelectedMovieViewModel()
             )
         }
     }

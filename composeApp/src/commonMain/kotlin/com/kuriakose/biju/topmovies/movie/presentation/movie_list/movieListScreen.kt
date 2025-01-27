@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kuriakose.biju.topmovies.movie.domain.Movie
+import com.kuriakose.biju.topmovies.movie.presentation.SelectedMovieViewModel
 import com.kuriakose.biju.topmovies.movie.presentation.movie_list.Components.MovieListView
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -64,55 +65,44 @@ fun MovieListScreen(
             .statusBarsPadding(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text("Top Movies")
-                    },
-                    backgroundColor = Color(0xFF9AD9FF)
-                )
-            },
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(vertical = 12.dp)
-                    .padding(horizontal = 10.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(vertical = 12.dp)
+                .padding(horizontal = 10.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
 
-            ) {
-                if(state.isLoading) {
-                    CircularProgressIndicator()
-                } else {
-                    when {
-                        state.errorMessage != null -> {
-                            Text(
-                                text = state.errorMessage,
-                                textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.headlineSmall,
-                                color = MaterialTheme.colorScheme.error
+        ) {
+            if(state.isLoading) {
+                CircularProgressIndicator()
+            } else {
+                when {
+                    state.errorMessage != null -> {
+                        Text(
+                            text = state.errorMessage,
+                            textAlign = TextAlign.Center,
+                            style = MaterialTheme.typography.headlineSmall,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                    state.result?.movies?.isEmpty() == true -> {
+                        androidx.compose.material3.Text(
+                            text = "No Data Available",
+                            textAlign = TextAlign.Center,
+                            style = MaterialTheme.typography.headlineSmall,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                    else -> {
+                        state.result?.let { it1 ->
+                            MovieListView(
+                                movies = it1.movies,
+                                onMovieClick = {
+                                    onAction(MovieListAction.OnMovieClick(it))
+                                },
+                                modifier = Modifier.fillMaxSize(),
+                                scrollState = movieResultsListState
                             )
-                        }
-                        state.result?.movies?.isEmpty() == true -> {
-                            androidx.compose.material3.Text(
-                                text = "No Data Available",
-                                textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.headlineSmall,
-                                color = MaterialTheme.colorScheme.error
-                            )
-                        }
-                        else -> {
-                            state.result?.let { it1 ->
-                                MovieListView(
-                                    movies = it1.movies,
-                                    onMovieClick = {
-                                        onAction(MovieListAction.OnMovieClick(it))
-                                    },
-                                    modifier = Modifier.fillMaxSize(),
-                                    scrollState = movieResultsListState
-                                )
-                            }
                         }
                     }
                 }

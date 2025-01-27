@@ -8,21 +8,18 @@
 
 import Foundation
 import UIKit
-import SwiftUI
 
 class ImageCache {
     static let shared = ImageCache()
 
-    private let cache = NSCache<NSString, UIImage>()
-
     private init() {}
 
     func set(_ image: UIImage, forKey key: String) {
-        cache.setObject(image, forKey: key as NSString)
+        MovieDataHandler().saveImage(imageUrl: key, image: image)
     }
 
     func get(forKey key: String) -> UIImage? {
-        return cache.object(forKey: key as NSString)
+        return MovieDataHandler().getImage(byUrl: key)
     }
 }
 

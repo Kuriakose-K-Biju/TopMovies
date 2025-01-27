@@ -19,7 +19,6 @@ final class CoreDataHelper {
             container.loadPersistentStores(completionHandler: { (storeDescription, error) in
                 if let error = error as NSError? {
                     print(error.localizedDescription)
-//                    fatalError("Unresolved error \(error), \(error.userInfo)")
                 }
             })
             
@@ -36,7 +35,6 @@ final class CoreDataHelper {
                 } catch {
                     let nserror = error as NSError
                     print(nserror)
-//                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
                 }
             }
         }
